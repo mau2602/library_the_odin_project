@@ -1,0 +1,80 @@
+body {
+    font-family: monospace;
+    font-size: 18px;
+    background-color: #f2f2f2;
+  }
+  
+  .container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .btn-submit,
+  .btn-delete {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor:pointer ;
+    transition: background-color 0.5s;
+    margin: 10px;
+    align-items: center;
+    font-family: Verdana, Tahoma, sans-serif;
+  }
+  .btn-submit {
+    background-color: #8cb458;
+  }
+
+  .btn-delete {
+    background-color: #b6813b
+  }
+  
+  .btn-submit:hover,
+  .btn-delete:hover {
+    background-color: #ca92cc;
+  }
+
+  .booksBox {
+      background-color: blanchedalmond;
+      height: 1000px;;
+      width: auto;
+      border: 10px rgb(179, 176, 176);
+  }
+
+  .book {
+    border:2px black;
+    font-family: monospace;
+    background-color: cadetblue;
+    text-align: center;
+    padding: 4px;
+  }
