@@ -1,8 +1,7 @@
-//document.addEventListener("DOMContentLoaded", function() {
 
 let form = document.getElementById("book-form")
 let booksBox = document.getElementById('listBooks')
-const booksList = []
+const booksList = [{title : 'Atlas Rebelion', author : 'Ayn Rand', pages : 1232, read : true}, {title: 'Atomics Habits', author: 'James Clear', pages:320, read: false},{title : 'Si lo crees, lo creas', author : 'Brian Tracy', pages : 218, read : true}]
 
 // Book constructor
 function Book (title, author, pages, read) {
@@ -17,7 +16,7 @@ form.addEventListener('submit', (event) => {
     let author = document.getElementById("author").value 
     let title = document.getElementById("title").value 
     let pages = document.getElementById("pages").value 
-    let read = document.getElementById("read").checked ? true : false
+    let read = document.getElementById("read").checked
     const book = new Book(title, author, pages, read)
     booksList.push(book)
     booksBox.innerHTML = ''
@@ -27,6 +26,8 @@ form.addEventListener('submit', (event) => {
     document.getElementById("pages").value = ''
     document.getElementById("read").checked = false
 })
+booksBox.innerHTML = ''
+showBooks()
 // Showing books from the array in the DOM, if any
 function showBooks (){
     
@@ -39,28 +40,26 @@ function showBooks (){
         `<h3>${element.title}</h3>
         <p>Author: ${element.author}</p>
         <p>Pages: ${element.pages}</p>
-        <p>Read: ${element.read ? 'Yes' : "No"}</p>
+        <p>Read: ${element.read ? 'Yes' : 'No'}</p>
         <button class='btn-delete' id='delete-btn' data-id='${element.id}'>Delete Book</button>`
         bookDiv.innerHTML = contentDiv
         booksBox.appendChild(bookDiv)
+        check = true
         index++    
-
-        const delButton = document.getElementById('delete-btn')
-        delButton.addEventListener('click', () => { 
-        let id = delButton.getAttribute('data-id')
-        bookIndex = booksList.indexOf(id)
-        console.log(bookIndex, id)
-        let bookDiv = delButton.parentNode
-        const indexBook = booksList.findIndex(book => book.id === id)
-            if (indexBook !== -1) {
-                booksList.splice(bookIndex, 1)
-                bookDiv.remove()
-                showBooks()
-                index--
-            } return
-        })
     }) 
 }
 
-
-
+    const delButton = document.getElementById('listBooks')
+    if(delButton){
+        delButton.addEventListener('click', (event) => { 
+        let btn = event.target.dataset
+        let btnId = btn.id
+        const indexBook = booksList.findIndex(book => book.id === btnId)
+        //let bookIndex = booksList.indexOf(btnId)
+        console.log(indexBook)
+        if (indexBook !== -1) {
+            booksList.splice(indexBook, 1)
+            booksBox.innerHTML = ''
+    }   showBooks()
+    })
+}
