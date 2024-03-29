@@ -28,11 +28,11 @@ form.addEventListener('submit', (event) => {
 })
 booksBox.innerHTML = ''
 showBooks()
+
 // Showing books from the array in the DOM, if any
 function showBooks (){
     
-    let index = 0
-    booksList.forEach((element) => {
+    booksList.forEach((element, index) => {
         let bookDiv = document.createElement("div")
         bookDiv.classList.add('book')
         element.id = `book:${index}`
@@ -44,19 +44,16 @@ function showBooks (){
         <button class='btn-delete' id='delete-btn' data-id='${element.id}'>Delete Book</button>`
         bookDiv.innerHTML = contentDiv
         booksBox.appendChild(bookDiv)
-        check = true
-        index++    
+        console.log(index)  
     }) 
 }
-
+// Deleting desired book using it's button 'data-id' attribute
     const delButton = document.getElementById('listBooks')
     if(delButton){
         delButton.addEventListener('click', (event) => { 
         let btn = event.target.dataset
         let btnId = btn.id
         const indexBook = booksList.findIndex(book => book.id === btnId)
-        //let bookIndex = booksList.indexOf(btnId)
-        console.log(indexBook)
         if (indexBook !== -1) {
             booksList.splice(indexBook, 1)
             booksBox.innerHTML = ''
