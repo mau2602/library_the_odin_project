@@ -41,22 +41,24 @@ function showBooks (){
         <p>Author: ${element.author}</p>
         <p>Pages: ${element.pages}</p>
         <p>Read: ${element.read ? 'Yes' : 'No'}</p>
-        <button class='btn-delete' id='delete-btn' data-id='${element.id}'>Delete Book</button>`
+        <button class='btn-delete' id='delete-btn' data-id='${element.id}'>Delete Book</button>` 
         bookDiv.innerHTML = contentDiv
         booksBox.appendChild(bookDiv)
-        console.log(index)  
     }) 
 }
 // Deleting desired book using it's button 'data-id' attribute
-    const delButton = document.getElementById('listBooks')
-    if(delButton){
+
+    const delButton = document.getElementById('boxBooks')
+
         delButton.addEventListener('click', (event) => { 
-        let btn = event.target.dataset
-        let btnId = btn.id
-        const indexBook = booksList.findIndex(book => book.id === btnId)
-        if (indexBook !== -1) {
-            booksList.splice(indexBook, 1)
-            booksBox.innerHTML = ''
-    }   showBooks()
+
+        if (event.target.classList.contains('btn-delete')){
+            let btn = event.target.dataset
+            let btnId = btn.id
+            const indexBook = booksList.findIndex(book => book.id === btnId)
+            if (indexBook !== -1) {
+                booksList.splice(indexBook, 1)
+                booksBox.innerHTML = ''
+        }showBooks()
+        }  
     })
-}
