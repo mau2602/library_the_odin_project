@@ -1,4 +1,3 @@
-
 let form = document.getElementById("book-form")
 let booksBox = document.getElementById('listBooks')
 const booksList = [{title : 'Atlas Rebelion', author : 'Ayn Rand', pages : 1232, read : true}, {title: 'Atomics Habits', author: 'James Clear', pages:320, read: false},{title : 'Si lo crees, lo creas', author : 'Brian Tracy', pages : 218, read : true}]
@@ -9,6 +8,9 @@ function Book (title, author, pages, read) {
     this.author = author
     this.pages = pages
     this.read = read 
+}
+Book.prototype.toggleBtn = function(book) {
+    book.read = !book.read
 }
 // Creating new book and adding it from inputs to books array
 form.addEventListener('submit', (event) => {
@@ -35,30 +37,53 @@ function showBooks (){
     booksList.forEach((element, index) => {
         let bookDiv = document.createElement("div")
         bookDiv.classList.add('book')
-        element.id = `book:${index}`
-        let contentDiv = 
-        `<h3>${element.title}</h3>
-        <p>Author: ${element.author}</p>
-        <p>Pages: ${element.pages}</p>
-        <p>Read: ${element.read ? 'Yes' : 'No'}</p>
-        <button class='btn-delete' id='delete-btn' data-id='${element.id}'>Delete Book</button>` 
-        bookDiv.innerHTML = contentDiv
+        bookDiv.dataset.bookId =`book:${index}`
+        let h3Element = document.createElement('h3')
+        h3Element.textContent = element.title
+        let pAuthor = document.createElement('p')
+        pAuthor.textContent = `Author: ${element.author}` 
+        let pPages = document.createElement('p')
+        pPages.textContent = `Pages: ${element.pages}`
+        let pRead = document.createElement('p')
+        pRead.classList.add('toggleRead')
+        pRead.textContent = element.read ? 'Read: Yes' : 'Read: No'
+        let delBtn = document.createElement('button')
+        delBtn.classList.add('btn-delete')
+        delBtn.textContent = 'Delete Book'
+        let toggleBtn = document.createElement('button')
+        toggleBtn.classList.add('btn-read')
+        toggleBtn.dataset.btnId = `${index}` 
+        pRead.dataset.btnId = `book:${index}`
+        toggleBtn.textContent = 'Read Toggle'
+        
+        bookDiv.appendChild(h3Element)
+        bookDiv.appendChild(pAuthor)
+        bookDiv.appendChild(pPages)
+        bookDiv.appendChild(pRead)
+        bookDiv.appendChild(delBtn)
+        bookDiv.appendChild(toggleBtn)
         booksBox.appendChild(bookDiv)
     }) 
 }
+const delButton = document.getElementById('boxBooks')
 // Deleting desired book using it's button 'data-id' attribute
 
-    const delButton = document.getElementById('boxBooks')
-
-        delButton.addEventListener('click', (event) => { 
-
-        if (event.target.classList.contains('btn-delete')){
-            let btn = event.target.dataset
-            let btnId = btn.id
-            const indexBook = booksList.findIndex(book => book.id === btnId)
-            if (indexBook !== -1) {
-                booksList.splice(indexBook, 1)
-                booksBox.innerHTML = ''
-        }showBooks()
-        }  
-    })
+    delButton.addEventListener('click', (e) => { 
+    if (e.target.classList.contains('btn-delete')){
+        let btn = e.target.dataset
+        let btnId = btn.id
+        const indexBook = booksList.findIndex(book => book.id === btnId)
+        if (indexBook !== -1) {
+            booksList.splice(indexBook, 1)
+            booksBox.innerHTML = ''
+        }
+    }
+// Toggling Read attribute 
+    if (e.target.classList.contains('btn-read')){
+        let btn = e.target.dataset
+        let btnId = btn.btnId
+        let toBeToggled = booksList[btnId]
+        Book.prototype.toggleBtn(toBeToggled)
+        booksBox.innerHTML = ''
+    } showBooks()
+})
