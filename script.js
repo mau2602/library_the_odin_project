@@ -3,12 +3,15 @@ let booksBox = document.getElementById('listBooks')
 const booksList = [{title : 'Atlas Rebelion', author : 'Ayn Rand', pages : 1232, read : true}, {title: 'Atomics Habits', author: 'James Clear', pages:320, read: false},{title : 'Si lo crees, lo creas', author : 'Brian Tracy', pages : 218, read : true}]
 
 // Book constructor
-function Book (title, author, pages, read) {
+class Book {
+    constructor(title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read 
+    }
 }
+
 Book.prototype.toggleBtn = function(book) {
     book.read = !book.read
 }
@@ -65,25 +68,25 @@ function showBooks (){
         booksBox.appendChild(bookDiv)
     }) 
 }
-const delButton = document.getElementById('boxBooks')
 // Deleting desired book using it's button 'data-id' attribute
+    const delButton = document.getElementById('boxBooks')
 
-    delButton.addEventListener('click', (e) => { 
-    if (e.target.classList.contains('btn-delete')){
-        let btn = e.target.dataset
-        let btnId = btn.id
-        const indexBook = booksList.findIndex(book => book.id === btnId)
-        if (indexBook !== -1) {
-            booksList.splice(indexBook, 1)
-            booksBox.innerHTML = ''
+        delButton.addEventListener('click', (e) => { 
+
+        if (e.target.classList.contains('btn-delete')){
+            let btn = e.target.dataset
+            let btnId = btn.id
+            const indexBook = booksList.findIndex(book => book.id === btnId)
+            if (indexBook !== -1) {
+                booksList.splice(indexBook, 1)
+                booksBox.innerHTML = ''
+            }
         }
-    }
-// Toggling Read attribute 
-    if (e.target.classList.contains('btn-read')){
-        let btn = e.target.dataset
-        let btnId = btn.btnId
-        let toBeToggled = booksList[btnId]
-        Book.prototype.toggleBtn(toBeToggled)
-        booksBox.innerHTML = ''
-    } showBooks()
-})
+        if (e.target.classList.contains('btn-read')){
+            let btn = e.target.dataset
+            let btnId = btn.btnId
+            let toBeToggled = booksList[btnId]
+            Book.prototype.toggleBtn(toBeToggled)
+            booksBox.innerHTML = ''
+        } showBooks()
+    })
